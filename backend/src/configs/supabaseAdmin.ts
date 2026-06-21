@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { env } from './env';
-import ws from 'ws'
+import ws from 'ws';
 
 /**
  * Server-side Supabase client using the service role key.
@@ -18,8 +18,7 @@ export const supabaseAdmin = createClient(
       persistSession: false,
     },
     realtime: {
-      // Tambahkan 'as any' di sini untuk mengatasi error TypeScript
-      transport: ws as any, 
+      transport: ws as any,
     },
   }
 );

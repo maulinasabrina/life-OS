@@ -1,10 +1,10 @@
 import type { Request, Response, NextFunction } from 'express';
+import { ValidationError } from '../validators/task.validator';
 
 /**
  * Catches errors passed via next(err) or thrown in async route handlers
- * wrapped with asyncHandler. Kept generic for Phase 1; expand with
- * typed error classes (NotFoundError, ValidationError, etc.) as the
- * app grows in later phases.
+ * wrapped with asyncHandler. ValidationError maps to 400; everything else
+ * is treated as an unexpected server error (500).
  */
 export function errorHandler(
   err: unknown,
@@ -13,6 +13,11 @@ export function errorHandler(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ): void {
+  if (err instanceof ValidationError) {
+    res.status(400).json({ error: err.message });
+    return;
+  }
+
   console.error(err);
 
   const message = err instanceof Error ? err.message : 'Unexpected server error.';

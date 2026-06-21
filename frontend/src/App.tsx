@@ -5,6 +5,7 @@ import { AppLayout } from '@/shared/layouts/AppLayout';
 import { LoginPage } from '@/pages/auth/LoginPage';
 import { SignupPage } from '@/pages/auth/SignupPage';
 import { DashboardPage } from '@/features/dashboard/pages/DashboardPage';
+import { TasksPage } from '@/pages/tasks/TasksPage';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             }
           >
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/tasks" element={<TasksPage />} />
           </Route>
 
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
