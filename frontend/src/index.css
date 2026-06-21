@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  /* Type */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Color: warm "personal study" palette — paper, ink, sage, terracotta */
+  --color-paper: #faf8f5;
+  --color-paper-raised: #ffffff;
+  --color-ink: #1c1b19;
+  --color-ink-soft: #565249;
+  --color-border: #e8e3db;
+  --color-sage: #5b6b5d;
+  --color-sage-soft: #e3e8e2;
+  --color-terracotta: #c97b5e;
+  --color-terracotta-soft: #f3e2da;
+  --color-error: #b3463f;
+  --color-error-soft: #f6e3e1;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Respect reduced-motion preference site-wide */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
