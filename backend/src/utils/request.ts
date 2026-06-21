@@ -1,5 +1,5 @@
 import type { Request } from 'express';
-import { ValidationError } from '../validators/task.validator';
+import { ValidationError } from '../validators/ValidationError';
 
 /**
  * Express 5 types req.params values as string | string[] for routes that

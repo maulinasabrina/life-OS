@@ -19,6 +19,6 @@ export const supabaseAdmin = createClient(
     },
     realtime: {
       transport: ws as any,
-    },
+    }
   }
 );

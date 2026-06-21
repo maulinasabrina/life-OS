@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { ValidationError } from '../validators/task.validator';
+import { ValidationError } from '../validators/ValidationError';
 
 /**
  * Catches errors passed via next(err) or thrown in async route handlers

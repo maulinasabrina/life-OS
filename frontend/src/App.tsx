@@ -6,6 +6,7 @@ import { LoginPage } from '@/pages/auth/LoginPage';
 import { SignupPage } from '@/pages/auth/SignupPage';
 import { DashboardPage } from '@/features/dashboard/pages/DashboardPage';
 import { TasksPage } from '@/pages/tasks/TasksPage';
+import { HabitsPage } from '@/pages/habits/HabitsPage';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           >
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/habits" element={<HabitsPage />} />
           </Route>
 
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

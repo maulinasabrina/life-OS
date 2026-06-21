@@ -1,7 +1,8 @@
-# Life OS — Phase 1 & 2
+# Life OS — Phase 1, 2 & 3
 
 **Phase 1 — Foundation:** project setup, authentication, layout system, sidebar, dashboard shell.
 **Phase 2 — Task Management:** daily/weekly/monthly tasks, quick tasks.
+**Phase 3 — Habit Tracking:** habit creation, daily/weekly logging, weekly tracker, streaks, completion rate.
 
 ## Structure
 
@@ -25,6 +26,7 @@ Create a project at [supabase.com](https://supabase.com) if you don't have one y
 Follow `database/README.md`. This runs the SQL migrations:
 - `001_phase1_users.sql` — `public.users` profile table, signup trigger, RLS
 - `002_phase2_tasks.sql` — `tasks` and `quick_tasks` tables, RLS
+- `003_phase3_habits.sql` — `habits` and `habit_logs` tables, RLS
 
 And walks through enabling Google OAuth.
 
@@ -67,13 +69,23 @@ Runs on `http://localhost:5173`.
 
 Mobile-first responsive layout throughout (sidebar collapses to a drawer below `md`).
 
+**Phase 3** (revised)
+- **Habits**: daily or weekly frequency
+- **Monthly tracker grid**: one unified table per month — habits as rows, every day of the selected month as a column, tap a cell to toggle that day's completion. Month tabs (Jan–Dec) switch the grid.
+- **Yearly overview**: a separate tab showing a yearly average score plus a card per month (completion % progress bar + qualitative label: Good / Decent / Needs work / Not started)
+- **Streaks**: computed on the fly from logs (never stored) — consecutive days for daily habits, consecutive weeks for weekly habits. Not currently surfaced in the grid UI (only used internally); easy to add as a tooltip/badge later if wanted.
+- Full CRUD, scoped per-user via RLS (habit_logs ownership is checked through the parent habit, since the table has no user_id of its own)
+
 ## What's intentionally not here
 
-Per the roadmap, only Phases 1–2 are built. No habit, journal, moodboard, or
-analytics code exists yet — those are Phases 3–8. The sidebar links to them
-are present but disabled so the full product shape is visible without
-pretending those modules already work. Quick Task → full Task conversion was
-explicitly scoped out of Phase 2.
+Per the roadmap, only Phases 1–3 are built. No recurring task, journal,
+moodboard, or analytics code exists yet — those are Phases 4–8. The sidebar
+links to them are present but disabled so the full product shape is visible
+without pretending those modules already work. Quick Task → full Task
+conversion was explicitly scoped out of Phase 2. Habit frequency is
+intentionally daily/weekly only — no custom weekday patterns or "X times
+per week" — per the roadmap's actual feature list; that flexibility, if
+wanted, belongs to Phase 4's Recurring Tasks instead.
 
 ## API reference (Phase 2)
 
@@ -90,19 +102,26 @@ All routes below require `Authorization: Bearer <supabase-access-token>`.
 | POST | `/api/quick-tasks` | body: `{ title }` |
 | PATCH | `/api/quick-tasks/:id` | body: `{ completed }` |
 | DELETE | `/api/quick-tasks/:id` | |
+| GET | `/api/habits?year=YYYY&month=M` | Both optional, default to current year/month. Returns each habit with that month's `logs`, plus `currentStreak` and `completionRate` (always "as of today," independent of which month is being viewed) |
+| POST | `/api/habits` | body: `{ title, frequency }` — frequency: `daily \| weekly` |
+| PATCH | `/api/habits/:id` | body: any subset of `{ title, frequency }` |
+| DELETE | `/api/habits/:id` | |
+| PUT | `/api/habits/:id/logs` | body: `{ date, completed }` — upserts a log entry for that date |
+| GET | `/api/habits/yearly-overview?year=YYYY` | `year` optional, defaults to current year. Returns `{ year, yearlyAverage, months: [{ month, completionRate, hasStarted }] }` — an aggregate (all habits combined) completion % per month |
 
 ## Notes for the next phase
 
 - Auth state lives in `frontend/src/features/auth/context/AuthContext.tsx` —
-  Phase 3+ features should consume `useAuth()` rather than re-deriving session state.
+  Phase 4+ features should consume `useAuth()` rather than re-deriving session state.
 - The backend's `requireAuth` middleware (`backend/src/middlewares/auth.middleware.ts`)
-  should gate every future protected route the same way `/api/users/me` and
-  `/api/tasks` are gated.
+  should gate every future protected route the same way existing feature routes are gated.
 - `frontend/src/shared/layouts/navConfig.ts` is the single place to flip a module
-  from "Soon" to active once its phase ships — flip `habits` next.
-- The `ValidationError` pattern in `backend/src/validators/task.validator.ts`
-  (thrown, caught by `errorHandler`, mapped to 400) is the convention to
-  follow for Habit Tracking's validators in Phase 3.
+  from "Soon" to active once its phase ships — flip `journal` next (Phase 4 is
+  Recurring Tasks, which extends `tasks` rather than adding a new sidebar entry).
+- `ValidationError` now lives in `backend/src/validators/ValidationError.ts` —
+  import it from there, not from `task.validator.ts`, for any new validator.
 - `getParam()` in `backend/src/utils/request.ts` should be reused for any
-  new route with an `:id` param — needed because of Express 5's stricter
-  `req.params` typing.
+  new route with an `:id` param.
+- `frontend/src/shared/utils/date.ts` has the week/date helpers used by the
+  habit tracker — reuse `currentWeekDates`/`toDateString` rather than
+  reimplementing date math for Recurring Tasks' scheduling logic.

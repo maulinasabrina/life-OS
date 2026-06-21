@@ -1,15 +1,11 @@
 import type { CreateTaskInput, UpdateTaskInput, TaskPriority, TaskStatus } from '../types/task';
+import { ValidationError } from './ValidationError';
+
+export { ValidationError };
 
 const VALID_PRIORITIES: TaskPriority[] = ['none', 'low', 'medium', 'high'];
 const VALID_STATUSES: TaskStatus[] = ['todo', 'pending', 'completed', 'overdue'];
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-
-export class ValidationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'ValidationError';
-  }
-}
 
 function assertValidDate(value: unknown, field: string): void {
   if (typeof value !== 'string' || !DATE_PATTERN.test(value) || Number.isNaN(Date.parse(value))) {

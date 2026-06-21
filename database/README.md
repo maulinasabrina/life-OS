@@ -2,16 +2,20 @@
 
 ## 1. Run the migration
 
-In your Supabase project, open the SQL Editor and run:
+In your Supabase project, open the SQL Editor and run, in order:
 
 ```
 sql/001_phase1_users.sql
+sql/002_phase2_tasks.sql
+sql/003_phase3_habits.sql
 ```
 
 This creates:
 - `public.users` — profile table synced 1:1 with `auth.users`
 - A trigger that auto-inserts a `public.users` row on signup (covers both email/password and Google OAuth)
 - Row Level Security: users can only read/update their own row
+- `public.tasks` / `public.quick_tasks` — Phase 2 task management, RLS scoped per-user
+- `public.habits` / `public.habit_logs` — Phase 3 habit tracking, RLS scoped per-user via the parent habit
 
 ## 2. Enable Google OAuth
 

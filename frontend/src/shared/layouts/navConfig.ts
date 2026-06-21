@@ -13,7 +13,7 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', path: '/dashboard', available: true, icon: 'dashboard' },
   { label: 'Tasks', path: '/tasks', available: true, icon: 'tasks' },
-  { label: 'Habits', path: '/habits', available: false, icon: 'habits' },
+  { label: 'Habits', path: '/habits', available: true, icon: 'habits' },
   { label: 'Journal', path: '/journal', available: false, icon: 'journal' },
   { label: 'Analytics', path: '/analytics', available: false, icon: 'analytics' },
   { label: 'Moodboard', path: '/moodboard', available: false, icon: 'moodboard' },
