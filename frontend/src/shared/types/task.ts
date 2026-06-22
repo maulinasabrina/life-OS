@@ -10,6 +10,7 @@ export interface Task {
   status: TaskStatus;
   priority: TaskPriority;
   due_date: string | null;
+  recurring_task_id: string | null;
   created_at: string;
   updated_at: string;
 }

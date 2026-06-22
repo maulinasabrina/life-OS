@@ -7,6 +7,10 @@ import { SignupPage } from '@/pages/auth/SignupPage';
 import { DashboardPage } from '@/features/dashboard/pages/DashboardPage';
 import { TasksPage } from '@/pages/tasks/TasksPage';
 import { HabitsPage } from '@/pages/habits/HabitsPage';
+import { RecurringTasksPage } from '@/pages/recurring-tasks/RecurringTasksPage';
+import { JournalListPage } from '@/pages/journal/JournalListPage';
+import { JournalNewPage } from '@/pages/journal/JournalNewPage';
+import { JournalEntryPage } from '@/pages/journal/JournalEntryPage';
 
 export default function App() {
   return (
@@ -25,6 +29,10 @@ export default function App() {
           >
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/tasks/recurring" element={<RecurringTasksPage />} />
+            <Route path="/journal" element={<JournalListPage />} />
+            <Route path="/journal/new" element={<JournalNewPage />} />
+            <Route path="/journal/:id" element={<JournalEntryPage />} />
             <Route path="/habits" element={<HabitsPage />} />
           </Route>
 

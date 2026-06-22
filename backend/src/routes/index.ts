@@ -3,6 +3,8 @@ import { userRouter } from './user.routes';
 import { taskRouter } from './task.routes';
 import { quickTaskRouter } from './quickTask.routes';
 import { habitRouter } from './habit.routes';
+import { recurringTaskRouter } from './recurringTask.routes';
+import { journalRouter } from './journal.routes';
 
 export const apiRouter = Router();
 
@@ -14,3 +16,5 @@ apiRouter.use('/users', userRouter);
 apiRouter.use('/tasks', taskRouter);
 apiRouter.use('/quick-tasks', quickTaskRouter);
 apiRouter.use('/habits', habitRouter);
+apiRouter.use('/recurring-tasks', recurringTaskRouter);
+apiRouter.use('/journal', journalRouter);

@@ -44,3 +44,103 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   Tiptap editor prose styles
+   Applied inside .tiptap-prose so they don't leak globally.
+   ============================================================ */
+.tiptap-prose {
+  outline: none;
+  min-height: 320px;
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.tiptap-prose p { margin: 0 0 0.75rem; }
+.tiptap-prose p:last-child { margin-bottom: 0; }
+
+.tiptap-prose h1 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--color-ink);
+}
+.tiptap-prose h2 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+  color: var(--color-ink);
+}
+.tiptap-prose h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0.875rem 0 0.375rem;
+  color: var(--color-ink);
+}
+
+.tiptap-prose ul,
+.tiptap-prose ol {
+  margin: 0.5rem 0 0.75rem 1.25rem;
+  padding: 0;
+}
+.tiptap-prose ul { list-style-type: disc; }
+.tiptap-prose ol { list-style-type: decimal; }
+.tiptap-prose li { margin: 0.25rem 0; }
+
+.tiptap-prose blockquote {
+  border-left: 3px solid var(--color-sage);
+  margin: 0.75rem 0;
+  padding: 0.5rem 0 0.5rem 1rem;
+  color: var(--color-ink-soft);
+  font-style: italic;
+}
+
+.tiptap-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875em;
+  background: var(--color-sage-soft);
+  color: var(--color-sage);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+}
+
+.tiptap-prose pre {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0.75rem 0;
+  overflow-x: auto;
+}
+.tiptap-prose pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.tiptap-prose hr {
+  border: none;
+  border-top: 2px solid var(--color-border);
+  margin: 1.25rem 0;
+}
+
+.tiptap-prose img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+}
+
+/* Placeholder */
+.tiptap-prose p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-ink-soft);
+  opacity: 0.5;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
